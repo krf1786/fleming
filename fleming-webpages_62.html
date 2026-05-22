@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleming Creative Systems — Webpages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,400;1,6..96,500;1,6..96,700;1,6..96,800&family=Playfair+Display:wght@400;500;600;700;800;900&family=Special+Elite&display=swap" rel="stylesheet">
+<script>
+  // First-visit detection — runs before CSS so .first-visit class is on body from the start
+  (function() {
+    try {
+      const visited = localStorage.getItem('fcs_visited');
+      if (!visited) {
+        document.documentElement.classList.add('first-visit-html');
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.classList.add('first-visit');
+          localStorage.setItem('fcs_visited', '1');
+        });
+      }
+    } catch (e) { /* localStorage unavailable — skip */ }
+  })();
+</script>
+<style>
+  :root {
+    --void: #2a2e34;
+    --void-deep: #1c2026;
+    --void-soft: #353941;
+    --ash: #404550;
+    --bone: #e8ebf0;
+    --bone-dim: rgba(232, 235, 240, 0.7);
+    --bone-mute: rgba(232, 235, 240, 0.4);
+    --bone-faint: rgba(232, 235, 240, 0.15);
+    --gold: #e8ebf0;
+    --gold-glow: rgba(232, 235, 240, 0.25);
+    --true-gold: #c9a766;
+    --blue: #8aa0c5;
+    --rule: rgba(232, 235, 240, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    background: var(--void);
+    color: var(--bone);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.5;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  /* ====== CINEMATIC SPOTLIGHT BACKDROP ====== */
+  /* Base dark stage (static — no animation here, keeps the void color steady) */
+  .stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 60% 70% at center, var(--void-soft) 0%, var(--void) 35%, var(--void-deep) 75%);
+  }
+
+  .beam { display: none; }
+  @keyframes lightPulse {
+    0%, 100% { opacity: 0.88; }
+    50%      { opacity: 1; }
+  }
+
+  .beam { display: none; }
+
+  /* Layer 3: Grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  /* Layer 4: Vignette */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(5, 5, 7, 0.7) 100%);
+  }
+
+  .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 26px 56px;
+    position: relative;
+    z-index: 2;
+    max-height: 100vh;
+    min-height: 0;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+    padding-bottom: 16px;
+  }
+  .nav-left, .nav-right {
+    opacity: 0;
+    animation: logoFadeIn 2.8s ease-out 0.6s forwards;
+  }
+  .nav-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--bone-mute);
+  }
+  .nav-left .gold { color: var(--true-gold); }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    opacity: 0;
+    animation: logoFadeIn 2.8s ease-out 0.3s forwards;
+  }
+  @keyframes logoFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .logo .l1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 0.32em;
+    padding-left: 0.32em;
+    text-transform: uppercase;
+    color: var(--bone);
+    line-height: 1;
+    position: relative;
+    padding-bottom: 7px;
+  }
+  .logo .l1::after {
+    content: '';
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    bottom: 0;
+    height: 1px;
+    background: var(--true-gold);
+    opacity: 0.7;
+  }
+  .logo .l2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.38em;
+    padding-left: 0.38em;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-top: 5px;
+    line-height: 1;
+  }
+
+  .nav-right {
+    text-align: right;
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--bone-mute);
+  }
+  .nav-right a {
+    color: var(--bone-mute);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-right a:hover { color: var(--bone); }
+  .nav-right .gold { color: var(--true-gold); }
+
+  /* ===== HAIRLINE RULE WITH ORNAMENT ===== */
+  .rule-row {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 28px;
+  }
+  .rule-row .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bone-faint) 20%, var(--bone-faint) 80%, transparent);
+  }
+  .rule-row .ornament {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .rule-row .ornament .dot {
+    width: 3px; height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .rule-row .ornament .diamond {
+    width: 5px; height: 5px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  /* ===== HERO ===== */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 0;
+    padding: 20px 0;
+    position: relative;
+  }
+
+  /* ===== EMBERS / DUST PARTICLES ===== */
+  .embers {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .ember {
+    position: absolute;
+    bottom: -20px;
+    width: 2px;
+    height: 2px;
+    background: var(--bone);
+    border-radius: 50%;
+    opacity: 0;
+    filter: blur(0.5px);
+    box-shadow: 0 0 4px rgba(232, 235, 240, 0.4);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0% {
+      transform: translateY(0) translateX(0);
+      opacity: 0;
+    }
+    10% { opacity: var(--peak, 0.6); }
+    50% { transform: translateY(-50vh) translateX(var(--drift, 20px)); opacity: var(--peak, 0.6); }
+    90% { opacity: 0; }
+    100% {
+      transform: translateY(-110vh) translateX(calc(var(--drift, 20px) * 2));
+      opacity: 0;
+    }
+  }
+
+  /* Per-ember variation */
+  .ember:nth-child(1)  { left: 8%;  width: 1.5px; height: 1.5px; --drift:  15px; --peak: 0.3;  animation-duration: 22s; animation-delay: 0s; }
+  .ember:nth-child(2)  { left: 14%; width: 2px;   height: 2px;   --drift: -10px; --peak: 0.4;  animation-duration: 28s; animation-delay: 3s; }
+  .ember:nth-child(3)  { left: 22%; width: 1px;   height: 1px;   --drift:  25px; --peak: 0.5;  animation-duration: 18s; animation-delay: 6s; }
+  .ember:nth-child(4)  { left: 30%; width: 2.5px; height: 2.5px; --drift: -18px; --peak: 0.6;  animation-duration: 32s; animation-delay: 1s; }
+  .ember:nth-child(5)  { left: 38%; width: 1.5px; height: 1.5px; --drift:  12px; --peak: 0.55; animation-duration: 26s; animation-delay: 8s; }
+  .ember:nth-child(6)  { left: 44%; width: 2px;   height: 2px;   --drift:  -8px; --peak: 0.65; animation-duration: 24s; animation-delay: 4s; }
+  .ember:nth-child(7)  { left: 50%; width: 2.5px; height: 2.5px; --drift:  16px; --peak: 0.7;  animation-duration: 30s; animation-delay: 11s;}
+  .ember:nth-child(8)  { left: 56%; width: 1.5px; height: 1.5px; --drift: -14px; --peak: 0.6;  animation-duration: 27s; animation-delay: 2s; }
+  .ember:nth-child(9)  { left: 62%; width: 2px;   height: 2px;   --drift:  22px; --peak: 0.5;  animation-duration: 21s; animation-delay: 9s; }
+  .ember:nth-child(10) { left: 70%; width: 1px;   height: 1px;   --drift: -12px; --peak: 0.45; animation-duration: 25s; animation-delay: 5s; }
+  .ember:nth-child(11) { left: 78%; width: 2px;   height: 2px;   --drift:  18px; --peak: 0.55; animation-duration: 29s; animation-delay: 12s;}
+  .ember:nth-child(12) { left: 86%; width: 1.5px; height: 1.5px; --drift: -20px; --peak: 0.4;  animation-duration: 23s; animation-delay: 7s; }
+  .ember:nth-child(13) { left: 92%; width: 1px;   height: 1px;   --drift:  10px; --peak: 0.3;  animation-duration: 20s; animation-delay: 14s;}
+  .ember:nth-child(14) { left: 18%; width: 1px;   height: 1px;   --drift: -16px; --peak: 0.35; animation-duration: 31s; animation-delay: 15s;}
+  .ember:nth-child(15) { left: 66%; width: 1.5px; height: 1.5px; --drift:  14px; --peak: 0.5;  animation-duration: 26s; animation-delay: 10s;}
+
+  /* ===== TYPEWRITER SLOGAN ===== */
+  .slogan-wrap {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+    font-family: 'Special Elite', monospace;
+    font-size: 13px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    padding-left: 0.45em;
+    height: 1.2em;
+    white-space: nowrap;
+  }
+  .typewriter {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  .caret {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--bone-dim);
+    vertical-align: text-bottom;
+    margin-left: 2px;
+    animation: blink 0.7s step-end infinite;
+  }
+  .caret.done { animation: none; opacity: 0; transition: opacity 0.5s ease; }
+  @keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .slogan-wrap .sep {
+    color: var(--bone-mute);
+    margin: 0 4px;
+    letter-spacing: 0;
+  }
+
+  /* F monogram — rendered as a CUTOUT showing darker depth + inner shadow (recessed look) */
+  .ghost-echo {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(140px, 18vw, 260px);
+    height: auto;
+    opacity: 0;
+    pointer-events: auto;
+    user-select: none;
+    z-index: 2;
+    animation: ghostFadeIn 12s ease-out 1.2s forwards;
+    transition: opacity 0.6s ease;
+    cursor: default;
+  }
+  .ghost-echo svg { width: 100%; height: auto; display: block; overflow: visible; }
+  @keyframes ghostFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Invisible hit area */
+  .ghost-hit {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(180px, 22vw, 320px);
+    height: clamp(240px, 28vw, 420px);
+    z-index: 3;
+    cursor: default;
+    background: transparent;
+  }
+
+  /* Hide the old glow / hover effects — F is now just a cutout */
+  .ghost-glow { display: none; }
+
+  /* #50 — Floor reflection of the F, mirrored just below the original */
+  .ghost-reflection {
+    position: absolute;
+    top: calc(62% + clamp(90px, 12vw, 170px));
+    left: 50%;
+    transform: translateX(-50%) scaleY(-1);
+    width: clamp(140px, 18vw, 260px);
+    height: auto;
+    color: rgba(232, 235, 240, 0.85);
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+    filter: blur(3px);
+    -webkit-mask-image: linear-gradient(0deg, transparent 15%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,1) 100%);
+            mask-image: linear-gradient(0deg, transparent 15%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,1) 100%);
+    animation: reflectionFadeIn 12s ease-out 1.4s forwards;
+  }
+  .ghost-reflection svg { width: 100%; height: auto; display: block; }
+  @keyframes reflectionFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 0.18; }
+  }
+
+  /* #33 — Light catch sweep across the F (animated gradient clipped to F shape) */
+  .light-sweep {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(140px, 18vw, 260px);
+    height: auto;
+    aspect-ratio: 19.24 / 25.21;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: sweepEnable 0.1s linear 13s forwards;
+    overflow: hidden;
+  }
+  /* Reflected shine on the floor — mirrored, blurred, faded with the reflection */
+  .light-sweep-reflection {
+    position: absolute;
+    top: calc(62% + clamp(90px, 12vw, 170px));
+    left: 50%;
+    transform: translateX(-50%) scaleY(-1);
+    width: clamp(140px, 18vw, 260px);
+    height: auto;
+    aspect-ratio: 19.24 / 25.21;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    filter: blur(2px);
+    -webkit-mask-image: linear-gradient(0deg, transparent 25%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,1) 100%);
+            mask-image: linear-gradient(0deg, transparent 25%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,1) 100%);
+    animation: sweepReflectionEnable 0.1s linear 13s forwards;
+    overflow: hidden;
+  }
+  @keyframes sweepEnable {
+    to { opacity: 1; }
+  }
+  @keyframes sweepReflectionEnable {
+    to { opacity: 0.55; }
+  }
+  .light-sweep svg,
+  .light-sweep-reflection svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .light-sweep .shine,
+  .light-sweep-reflection .shine {
+    fill: url(#shineGradient);
+    transform-origin: center;
+    animation: shineMove 18s ease-in-out 14s infinite;
+  }
+  @keyframes shineMove {
+    0%   { transform: translateX(-220%); }
+    45%  { transform: translateX(220%); }
+    100% { transform: translateX(220%); }
+  }
+  @keyframes ghostFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 0.05; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+  }
+
+  .eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 26px;
+    font-variation-settings: "opsz" 144;
+    color: var(--bone);
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+    position: relative;
+  }
+  h1 .dot { color: var(--gold); }
+
+  .hero-lead {
+    max-width: 580px;
+    margin: 0 auto 36px;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--bone-dim);
+    font-weight: 300;
+  }
+
+  .actions {
+    display: inline-flex;
+    gap: 28px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn-primary {
+    font-family: 'Fraunces', serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    background: transparent;
+    color: var(--bone);
+    border: 1px solid var(--gold);
+    padding: 16px 32px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+    z-index: 0;
+  }
+  .btn-primary:hover::before { transform: translateY(0); }
+  .btn-primary:hover {
+    color: var(--void);
+    box-shadow: 0 0 30px var(--gold-glow);
+  }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-primary .arrow { transition: transform 0.3s; }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+
+  .btn-text {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: var(--bone-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--bone-faint);
+    padding-bottom: 4px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .btn-text:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* ===== SPEC STRIP (bottom — Moonwatch-inspired, but in our voice) ===== */
+  .spec-strip {
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding-top: 32px;
+  }
+
+  .spec {
+    padding: 0 24px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .spec:hover .spec-name { color: var(--gold); }
+
+  .spec-icon {
+    width: 28px;
+    height: 28px;
+    margin: 0 auto 14px;
+    color: var(--gold);
+    opacity: 0.7;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .spec-num {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--true-gold);
+    margin-bottom: 6px;
+  }
+  .spec-name {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--bone);
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+    transition: color 0.3s;
+  }
+  .spec-desc {
+    font-family: 'Fraunces', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--bone-mute);
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    flex-shrink: 0;
+    padding-top: 22px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 30px;
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--bone-mute);
+    text-transform: uppercase;
+  }
+  footer .center {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+  footer .right { text-align: right; }
+  footer a {
+    color: var(--bone-mute);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  footer a:hover { color: var(--gold); }
+
+  /* #17 — Description swap on hover (two stacked descs, fade between) */
+  .spec {
+    position: relative;
+  }
+  /* Container that holds both desc + alt-desc, sized to the larger one */
+  .spec-desc-wrap {
+    position: relative;
+    min-height: 2.8em;
+  }
+  .spec-desc, .spec-desc-alt {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: opacity 0.9s ease;
+  }
+  .spec-desc-alt {
+    opacity: 0;
+    font-family: 'Fraunces', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--bone-mute);
+    line-height: 1.4;
+    font-weight: 300;
+    pointer-events: none;
+  }
+  .spec:hover .spec-desc     { opacity: 0; }
+  .spec:hover .spec-desc-alt { opacity: 1; }
+
+  /* #20 — Hovering one spec dims the other three + scales the active one up for readability */
+  .spec {
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    transform-origin: center bottom;
+  }
+  .spec-strip:hover .spec        { opacity: 0.4; }
+  .spec-strip .spec:hover        { opacity: 1; transform: scale(1.18); }
+
+  /* #24 — First letter of slogan glows subtly (only first letter of each word) */
+  /* Applied via JS rendering, see typewriter token loop. */
+  .typewriter .drop-cap {
+    color: var(--bone);
+    text-shadow: 0 0 8px rgba(232, 235, 240, 0.4);
+    animation: dropCapPulse 4s ease-in-out infinite;
+  }
+  @keyframes dropCapPulse {
+    0%, 100% { text-shadow: 0 0 6px rgba(232, 235, 240, 0.25); }
+    50%      { text-shadow: 0 0 14px rgba(232, 235, 240, 0.55); }
+  }
+
+  /* #8 — First-visit F draw animation
+     Stroked overlay traces the F path, then fill catches up.
+     Only applies if body has .first-visit class (set by inline script). */
+  .ghost-stroke {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(140px, 18vw, 260px);
+    height: auto;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+  }
+  body.first-visit .ghost-stroke {
+    display: block;
+    opacity: 1;
+  }
+  body:not(.first-visit) .ghost-stroke {
+    display: none;
+  }
+  .ghost-stroke svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .ghost-stroke path {
+    fill: none;
+    stroke: var(--bone-dim);
+    stroke-width: 0.18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 120;
+    stroke-dashoffset: 120;
+  }
+  body.first-visit .ghost-stroke path {
+    animation: drawF 3.5s ease-in-out 0.6s forwards, fadeStrokeOut 1.2s ease-out 4s forwards;
+  }
+  @keyframes drawF {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes fadeStrokeOut {
+    to { opacity: 0; }
+  }
+
+  /* On first visit, delay the regular fade-in of the filled F so the stroke draws first */
+  body.first-visit .ghost-echo {
+    animation: ghostFadeIn 6s ease-out 3.5s forwards;
+  }
+  body.first-visit .ghost-reflection {
+    animation-delay: 4s;
+  }
+
+  /* ===== #97 — Live date stamp (sits in footer center) ===== */
+  footer .center#dateStamp {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--bone-mute);
+    text-align: center;
+    opacity: 0;
+    animation: dateStampFade 2s ease-out 3s forwards;
+    font-style: normal;
+    white-space: nowrap;
+  }
+  @keyframes dateStampFade {
+    from { opacity: 0; }
+    to   { opacity: 0.6; }
+  }
+  @media (max-height: 820px) {
+    h1 { font-size: clamp(40px, 5.6vw, 80px); margin-bottom: 20px; }
+    .hero-lead { font-size: 15px; margin-bottom: 28px; }
+    .eyebrow { margin-bottom: 22px; }
+    .ghost-mark { font-size: clamp(220px, 26vw, 380px); }
+    .page { padding: 20px 48px; }
+    .rule-row { padding-bottom: 18px; }
+    .spec-strip { padding-top: 22px; }
+    .spec-icon { width: 24px; height: 24px; margin-bottom: 10px; }
+    footer { padding-top: 16px; }
+  }
+  @media (max-height: 720px) {
+    h1 { font-size: clamp(36px, 4.8vw, 64px); }
+    .hero-lead { font-size: 14px; margin-bottom: 22px; }
+    .eyebrow { margin-bottom: 16px; font-size: 10px; }
+    main { padding: 10px 0; }
+    .spec-icon { width: 22px; height: 22px; margin-bottom: 8px; }
+    .spec-name { font-size: 14px; }
+    .spec-desc { font-size: 11px; }
+    .btn-primary { padding: 13px 26px; }
+  }
+
+  @media (max-width: 1100px) {
+    html, body { overflow: auto; height: auto; }
+    .page { max-height: none; padding: 24px 28px; }
+  }
+  @media (max-width: 700px) {
+    nav { grid-template-columns: 1fr; gap: 10px; text-align: center; }
+    .nav-left, .nav-right { text-align: center; }
+    .spec-strip { grid-template-columns: 1fr 1fr; gap: 28px 0; }
+    footer { grid-template-columns: 1fr; text-align: center; gap: 10px; }
+    footer .right { text-align: center; }
+    .actions { flex-direction: column; gap: 18px; }
+    .btn-primary { width: 100%; justify-content: center; }
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes beamGlow {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 1; }
+  }
+
+  .beam { animation: beamGlow 6s ease-in-out infinite; }
+  .hero-content > * { animation: fadeUp 1s ease-out backwards; }
+  .hero-content .eyebrow { animation-delay: 0.2s; }
+  .hero-content h1 { animation-delay: 0.35s; }
+  .hero-content .hero-lead { animation-delay: 0.55s; }
+  .hero-content .actions { animation-delay: 0.7s; }
+  .spec-strip .spec { animation: fadeUp 0.8s ease-out backwards; }
+  .spec-strip .spec:nth-child(1) { animation-delay: 0.85s; }
+  .spec-strip .spec:nth-child(2) { animation-delay: 0.95s; }
+  .spec-strip .spec:nth-child(3) { animation-delay: 1.05s; }
+  .spec-strip .spec:nth-child(4) { animation-delay: 1.15s; }
+</style>
+</head>
+<body>
+
+<!-- Cinematic backdrop layers -->
+<div class="stage"></div>
+<div class="beam"></div>
+
+<!-- Rising embers / dust particles -->
+<div class="embers" aria-hidden="true">
+  <span class="ember"></span><span class="ember"></span><span class="ember"></span>
+  <span class="ember"></span><span class="ember"></span><span class="ember"></span>
+  <span class="ember"></span><span class="ember"></span><span class="ember"></span>
+  <span class="ember"></span><span class="ember"></span><span class="ember"></span>
+  <span class="ember"></span><span class="ember"></span><span class="ember"></span>
+</div>
+
+<div class="page">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">Est. <span class="gold">MCMXXXVIII</span></div>
+    <div class="logo">
+      <span class="l1">Fleming</span>
+      <span class="l2">Creative Systems</span>
+    </div>
+    <div class="nav-right"><a href="mailto:kyle@fcs.com">kyle<span class="gold">@fcs.com</span></a></div>
+  </nav>
+
+  <!-- HERO -->
+  <main>
+    <!-- Back-glow shaped like F (sits BEHIND the dark F so light only spills around its edges) -->
+    <svg class="ghost-glow" viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+    </svg>
+
+    <!-- F monogram — rendered as a CUTOUT with inner shadow for depth -->
+    <svg class="ghost-echo" viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <!-- Inner shadow filter: simulates the back wall of the cutout -->
+        <filter id="innerShadow" x="-30%" y="-30%" width="160%" height="160%">
+          <!-- Start with the F shape -->
+          <feGaussianBlur in="SourceAlpha" stdDeviation="0.5"/>
+          <!-- Offset DOWN AND RIGHT to suggest light from upper-left -->
+          <feOffset dx="0.5" dy="0.7" result="offsetblur"/>
+          <!-- Color the shadow dark -->
+          <feFlood flood-color="#000000" flood-opacity="0.95"/>
+          <feComposite in2="offsetblur" operator="in"/>
+          <!-- Keep only the parts inside the F (this is what makes it INNER) -->
+          <feComposite in2="SourceAlpha" operator="in" result="innerShadow"/>
+          <!-- Stack: deeper dark fill BENEATH, then the inner shadow on top -->
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="innerShadow"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- Back wall of cutout (slightly darker than the page bg, suggests depth) -->
+      <path
+        fill="#1a1d22"
+        filter="url(#innerShadow)"
+        d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+      <!-- Subtle highlight on the lower-right edge (light catching the inside lip) -->
+      <path
+        fill="none"
+        stroke="rgba(232, 235, 240, 0.18)"
+        stroke-width="0.12"
+        d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+    </svg>
+
+    <!-- #8 First-visit stroked F that draws itself like ink -->
+    <svg class="ghost-stroke" viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+    </svg>
+
+    <!-- Invisible hover hit area sized to F's bounding box -->
+    <div class="ghost-hit" aria-hidden="true"></div>
+
+    <!-- #50 Floor reflection of the F -->
+    <svg class="ghost-reflection" viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+    </svg>
+
+    <!-- #33 Light catch sweep (clipped to F shape) -->
+    <div class="light-sweep" aria-hidden="true">
+      <svg viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="shineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="rgba(232, 235, 240, 0)"/>
+            <stop offset="15%"  stop-color="rgba(232, 235, 240, 0)"/>
+            <stop offset="35%"  stop-color="rgba(232, 235, 240, 0.05)"/>
+            <stop offset="50%"  stop-color="rgba(232, 235, 240, 0.22)"/>
+            <stop offset="65%"  stop-color="rgba(232, 235, 240, 0.05)"/>
+            <stop offset="85%"  stop-color="rgba(232, 235, 240, 0)"/>
+            <stop offset="100%" stop-color="rgba(232, 235, 240, 0)"/>
+          </linearGradient>
+          <clipPath id="fClip">
+            <path d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#fClip)">
+          <rect class="shine" x="-30" y="-5" width="30" height="35"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- #33 Light catch sweep — reflected version on the floor -->
+    <div class="light-sweep-reflection" aria-hidden="true">
+      <svg viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <g clip-path="url(#fClip)">
+          <rect class="shine" x="-30" y="-5" width="30" height="35"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- #97 Live date stamp -->
+
+    <div class="slogan-wrap">
+      <span class="typewriter" id="typewriter"></span><span class="caret" id="caret"></span>
+    </div>
+  </main>
+
+  <!-- SPEC STRIP -->
+  <div class="spec-strip">
+    <div class="spec">
+      <div class="spec-num">01</div>
+      <div class="spec-name">Marketing Sites</div>
+      <div class="spec-desc-wrap">
+        <div class="spec-desc">Multi-page. Built to convert.</div>
+        <div class="spec-desc-alt">Strategy, content, design, dev — end-to-end.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-num">02</div>
+      <div class="spec-name">Landing Pages</div>
+      <div class="spec-desc-wrap">
+        <div class="spec-desc">Focused. Tuned. Conversion-ready.</div>
+        <div class="spec-desc-alt">Single-purpose pages, A/B-tested for performance.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-num">03</div>
+      <div class="spec-name">E-Commerce</div>
+      <div class="spec-desc-wrap">
+        <div class="spec-desc">Stores built around the product.</div>
+        <div class="spec-desc-alt">Shopify, headless, custom — checkout-first design.</div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-num">04</div>
+      <div class="spec-name">Custom Builds</div>
+      <div class="spec-desc-wrap">
+        <div class="spec-desc">Tools, portals, dashboards.</div>
+        <div class="spec-desc-alt">React, Next.js — built to your spec, owned by you.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div></div>
+    <div class="center" id="dateStamp"></div>
+    <div class="right"></div>
+  </footer>
+
+</div><!-- /.page -->
+
+<script>
+  // ===== #46 Mechanical typewriter (+ #15 retype every 12s, #24 drop-caps) =====
+  (function() {
+    const target = document.getElementById('typewriter');
+    const caret  = document.getElementById('caret');
+    if (!target) return;
+
+    const tokens = [
+      { text: 'M', d: 110, dropCap: true },
+      { text: 'o', d: 70 }, { text: 'd', d: 85 }, { text: 'e', d: 65 }, { text: 'r', d: 80 }, { text: 'n', d: 95 },
+      { text: ' ', d: 170 },
+      { text: 'S', d: 130, dropCap: true },
+      { text: 'o', d: 60 }, { text: 'l', d: 75 }, { text: 'u', d: 65 }, { text: 't', d: 85 }, { text: 'i', d: 60 }, { text: 'o', d: 70 }, { text: 'n', d: 75 }, { text: 's', d: 110 },
+      { text: ' ', d: 200 },
+      { html: '<span class="sep">·</span>', d: 260 },
+      { text: ' ', d: 200 },
+      { text: 'T', d: 130, dropCap: true },
+      { text: 'r', d: 70 }, { text: 'a', d: 65 }, { text: 'd', d: 85 }, { text: 'i', d: 60 }, { text: 't', d: 80 }, { text: 'i', d: 60 }, { text: 'o', d: 70 }, { text: 'n', d: 90 }, { text: 'a', d: 65 }, { text: 'l', d: 110 },
+      { text: ' ', d: 180 },
+      { text: 'S', d: 135, dropCap: true },
+      { text: 't', d: 80 }, { text: 'a', d: 65 }, { text: 'n', d: 85 }, { text: 'd', d: 80 }, { text: 'a', d: 65 }, { text: 'r', d: 80 }, { text: 'd', d: 85 }, { text: 's', d: 220 }
+    ];
+
+    const jitter = (base) => base + (Math.random() * 50 - 15);
+
+    function typeOnce(startDelay, onDone) {
+      target.innerHTML = '';
+      if (caret) caret.classList.remove('done');
+
+      let acc = startDelay;
+      tokens.forEach((tok) => {
+        setTimeout(() => {
+          if (tok.html) {
+            target.insertAdjacentHTML('beforeend', tok.html);
+          } else if (tok.dropCap) {
+            const span = document.createElement('span');
+            span.className = 'drop-cap';
+            span.textContent = tok.text;
+            target.appendChild(span);
+          } else {
+            target.appendChild(document.createTextNode(tok.text));
+          }
+        }, acc);
+        acc += jitter(tok.d);
+      });
+
+      setTimeout(() => {
+        if (caret) caret.classList.add('done');
+        if (onDone) onDone();
+      }, acc + 800);
+
+      return acc;
+    }
+
+    // First type pass
+    typeOnce(1200, () => {
+      scheduleNextGlitch();
+    });
+
+    // ===== #11 Slogan glitch shuffle =====
+    const finalSlogan = ['Modern', 'Solutions', '·', 'Traditional', 'Standards'];
+    const glitchChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&*<>/?\\!';
+
+    function rebuildSlogan(wordArr) {
+      target.innerHTML = '';
+      wordArr.forEach((w, i) => {
+        if (w === '·') {
+          target.insertAdjacentHTML('beforeend', '<span class="sep">·</span>');
+        } else if (w.length > 0) {
+          const cap = document.createElement('span');
+          cap.className = 'drop-cap';
+          cap.textContent = w.charAt(0);
+          target.appendChild(cap);
+          if (w.length > 1) {
+            target.appendChild(document.createTextNode(w.slice(1)));
+          }
+        }
+        if (i < wordArr.length - 1) {
+          target.appendChild(document.createTextNode(' '));
+        }
+      });
+    }
+
+    function randomScramble(original) {
+      return original.split('').map(ch => {
+        if (/[A-Za-z0-9]/.test(ch)) {
+          return glitchChars.charAt(Math.floor(Math.random() * glitchChars.length));
+        }
+        return ch;
+      }).join('');
+    }
+
+    function triggerGlitch() {
+      const candidates = [0, 1, 3, 4];
+      const idx = candidates[Math.floor(Math.random() * candidates.length)];
+      const original = finalSlogan[idx];
+
+      const states = [];
+      for (let i = 0; i < 6; i++) states.push(randomScramble(original));
+      states.push(original);
+
+      let frame = 0;
+      const interval = setInterval(() => {
+        const display = [...finalSlogan];
+        display[idx] = states[frame];
+        rebuildSlogan(display);
+        frame++;
+        if (frame >= states.length) clearInterval(interval);
+      }, 178);
+    }
+
+    function scheduleNextGlitch() {
+      const delay = 5000 + Math.random() * 3000;
+      setTimeout(() => {
+        triggerGlitch();
+        scheduleNextGlitch();
+      }, delay);
+    }
+  })();
+
+  // ===== #97 Live date stamp =====
+  (function() {
+    const el = document.getElementById('dateStamp');
+    if (!el) return;
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function update() {
+      const now = new Date();
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      const days   = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const d = days[now.getDay()];
+      const m = months[now.getMonth()];
+      const date = pad(now.getDate());
+      const yr = now.getFullYear();
+      const h = pad(now.getHours());
+      const min = pad(now.getMinutes());
+      el.textContent = `${d} · ${m} ${date} · ${yr} · ${h}:${min}`;
+    }
+
+    update();
+    setInterval(update, 60000); // update every minute
+  })();
+</script>
+</body>
+</html>

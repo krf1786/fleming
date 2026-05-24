@@ -210,94 +210,90 @@
     justify-self: center;
     width: min(100%, 470px);
     min-height: 360px;
+    display: grid;
+    place-items: center;
   }
 
   .f-module {
-    position: absolute;
-    top: 10px;
-    right: 78px;
-    width: clamp(170px, 18vw, 245px);
+    position: relative;
+    width: clamp(210px, 23vw, 320px);
     aspect-ratio: 0.76;
-    display: grid;
-    place-items: center;
-    border-radius: 5px;
-    background:
-      linear-gradient(145deg, rgba(255, 255, 255, 0.055), transparent 30%),
-      linear-gradient(180deg, #303136, #24252a);
-    border: 1px solid rgba(0, 0, 0, 0.58);
-    box-shadow:
-      inset 1px 1px 0 rgba(255, 255, 255, 0.05),
-      inset -1px -1px 0 rgba(0, 0, 0, 0.54),
-      14px 18px 28px rgba(0, 0, 0, 0.28);
+    display: block;
   }
 
   .vent {
-    position: absolute;
-    top: 62px;
-    width: 88px;
-  }
-
-  .vent span {
-    display: block;
-    height: 3px;
-    margin: 7px 0;
-    border-radius: 99px;
-    background: rgba(2, 2, 3, 0.72);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+    display: none;
   }
 
   .f-chip {
     position: absolute;
-    inset: 46px 42px 32px;
-    opacity: 0.34;
+    inset: 0;
+    opacity: 1;
   }
 
   .f-chip svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+    overflow: visible;
+    filter:
+      drop-shadow(0 26px 28px rgba(0, 0, 0, 0.42))
+      drop-shadow(0 2px 1px rgba(255, 255, 255, 0.08));
   }
 
-  .f-chip .f-body { fill: rgba(8, 11, 9, 0.74); }
-  .f-chip .f-board { fill: rgba(18, 71, 43, 0.42); }
+  .f-chip .f-depth {
+    fill: rgba(2, 3, 4, 0.46);
+    transform: translate(0.34px, 0.5px);
+  }
+
+  .f-chip .f-body {
+    fill: url(#acrylicFace);
+    stroke: rgba(231, 226, 205, 0.22);
+    stroke-width: 0.12;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .f-chip .f-inner-glass {
+    fill: url(#acrylicInner);
+    opacity: 0.62;
+  }
+
+  .f-chip .f-glint {
+    fill: none;
+    stroke: rgba(255, 252, 236, 0.42);
+    stroke-width: 0.09;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .f-chip .f-shadow-line {
+    fill: none;
+    stroke: rgba(0, 0, 0, 0.34);
+    stroke-width: 0.18;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .f-chip .f-board {
+    fill: rgba(18, 71, 43, 0.2);
+    filter: blur(0.05px);
+  }
+
   .f-chip .trace {
     fill: none;
-    stroke: rgba(106, 205, 124, 0.46);
+    stroke: rgba(106, 205, 124, 0.3);
     stroke-width: 0.18;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .f-chip .node { fill: rgba(201, 168, 114, 0.45); }
+  .f-chip .node { fill: rgba(201, 168, 114, 0.3); }
 
   .side-pill {
-    position: absolute;
-    top: 120px;
-    right: 24px;
-    width: 22px;
-    height: 72px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #151518, #55585b 35%, #d6d2c3 52%, #242528 72%, #09090a);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 9px 18px rgba(0, 0, 0, 0.42);
-  }
-
-  .side-pill::before {
-    content: 'PCB';
-    position: absolute;
-    left: 50%;
-    top: -20px;
-    transform: translateX(-50%);
-    font: 5px/1 'Special Elite', monospace;
-    letter-spacing: 0.14em;
-    color: rgba(244, 236, 213, 0.18);
+    display: none;
   }
 
   .controls {
-    position: absolute;
-    right: 72px;
-    bottom: 34px;
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
+    display: none;
   }
 
   .control-dots {
@@ -431,7 +427,7 @@
     .hardware {
       order: 2;
       width: min(100%, 360px);
-      min-height: 265px;
+      min-height: 250px;
       margin: 0 auto;
     }
 
@@ -440,60 +436,11 @@
     }
 
     .f-module {
-      top: 0;
-      right: 50%;
-      transform: translateX(50%);
-      width: min(58vw, 190px);
-    }
-
-    .vent {
-      top: 42px;
-      width: 64px;
-    }
-
-    .vent span {
-      height: 2px;
-      margin: 5px 0;
+      width: min(54vw, 190px);
     }
 
     .f-chip {
-      inset: 36px 32px 26px;
-    }
-
-    .side-pill {
-      top: 62px;
-      right: 24px;
-      width: 18px;
-      height: 58px;
-    }
-
-    .controls {
-      left: 50%;
-      right: auto;
-      bottom: 0;
-      transform: translateX(-50%);
-      gap: 12px;
-    }
-
-    .control-dots {
-      gap: 9px;
-      padding-bottom: 8px;
-    }
-
-    .dot-control {
-      width: 16px;
-      height: 16px;
-    }
-
-    .dot-control::before,
-    .knob::before,
-    .side-pill::before {
-      display: none;
-    }
-
-    .knob {
-      width: 42px;
-      height: 42px;
+      inset: 0;
     }
 
     .services {
@@ -588,27 +535,33 @@
 
       <div class="hardware" aria-hidden="true">
         <div class="f-module">
-          <div class="vent"><span></span><span></span><span></span><span></span><span></span></div>
           <div class="f-chip">
             <svg viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="acrylicFace" x1="2.4" y1="1.2" x2="15.8" y2="23.4" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#f4ecd5" stop-opacity="0.28"/>
+                  <stop offset="0.28" stop-color="#9a9ea1" stop-opacity="0.1"/>
+                  <stop offset="0.58" stop-color="#1f2227" stop-opacity="0.42"/>
+                  <stop offset="1" stop-color="#07080a" stop-opacity="0.68"/>
+                </linearGradient>
+                <radialGradient id="acrylicInner" cx="32%" cy="20%" r="78%">
+                  <stop offset="0" stop-color="#ffffff" stop-opacity="0.26"/>
+                  <stop offset="0.34" stop-color="#d8d2bf" stop-opacity="0.08"/>
+                  <stop offset="1" stop-color="#050607" stop-opacity="0.42"/>
+                </radialGradient>
+              </defs>
+              <path class="f-depth" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
               <path class="f-body" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+              <path class="f-inner-glass" d="M.72 4.13 4.21.84h13.64l-2.24 3.18H4.42v5.41h7.38l-2.24 3.18H4.42v7.22L.72 23.58V4.13Z"/>
               <path class="f-board" d="M.72 4.13 4.21.84h13.64l-2.24 3.18H4.42v5.41h7.38l-2.24 3.18H4.42v7.22L.72 23.58V4.13Z"/>
               <path class="trace" d="M5.35,3.64h2.85l.55-.54h1.9M12.7,1.3v1.08h1.65M1.25,5.22v3.25l.79.79v3.44M5.55,9.84h1.73l.5.5h2.16M1.42,17.07h1.08v2.1l.62.63"/>
               <circle class="node" cx="12.7" cy="1.3" r=".18"/>
               <circle class="node" cx="7.78" cy="10.34" r=".14"/>
               <circle class="node" cx="3.12" cy="19.8" r=".14"/>
+              <path class="f-shadow-line" d="M.12 3.86v20.96M5.18 13.23h4.74M5.14 4.62h10.84"/>
+              <path class="f-glint" d="M.52 4.02 4.16.54h13.18M4.38 4.14h10.42M4.38 9.62h6.66M4.34 13.02v6.46"/>
             </svg>
           </div>
-        </div>
-        <div class="side-pill"></div>
-        <div class="controls">
-          <div class="control-dots">
-            <div class="dot-control" data-label="sites"></div>
-            <div class="dot-control" data-label="pages"></div>
-            <div class="dot-control" data-label="store"></div>
-            <div class="dot-control" data-label="build"></div>
-          </div>
-          <div class="knob"></div>
         </div>
       </div>
     </section>

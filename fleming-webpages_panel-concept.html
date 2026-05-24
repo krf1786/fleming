@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleming Creative Systems - Panel Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&family=Playfair+Display:wght@500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #101012;
+    --bg-deep: #080809;
+    --panel: #28292e;
+    --panel-low: #202126;
+    --panel-high: #303137;
+    --ink: #f4ecd5;
+    --muted: rgba(244, 236, 213, 0.45);
+    --faint: rgba(244, 236, 213, 0.16);
+    --gold: #c9a872;
+    --gold-hot: #d8b77c;
+    --green: #4fb169;
+  }
+
+  * { box-sizing: border-box; }
+
+  html,
+  body {
+    margin: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: clamp(28px, 5vw, 76px);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    background:
+      radial-gradient(ellipse 54% 28% at 50% 100%, rgba(47, 47, 52, 0.16), transparent 70%),
+      radial-gradient(ellipse 64% 38% at 50% 14%, rgba(201, 168, 114, 0.08), transparent 62%),
+      linear-gradient(180deg, #131315 0%, var(--bg) 48%, var(--bg-deep) 100%);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.33;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .94 0 0 0 0 .82 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .machine-wrap {
+    width: min(100%, 1220px);
+  }
+
+  .kicker {
+    margin: 0 0 18px;
+    font: 11px/1 'Special Elite', monospace;
+    letter-spacing: 0.05em;
+    color: rgba(244, 236, 213, 0.22);
+  }
+
+  .machine {
+    position: relative;
+    min-height: min(58vw, 560px);
+    border-radius: 8px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 18%, transparent 76%, rgba(0, 0, 0, 0.26)),
+      linear-gradient(180deg, var(--panel-high), var(--panel) 46%, var(--panel-low));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.7),
+      0 38px 90px rgba(0, 0, 0, 0.48);
+    border: 1px solid rgba(244, 236, 213, 0.045);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(380px, 1.1fr);
+    align-items: center;
+    gap: clamp(26px, 5vw, 82px);
+    padding: clamp(70px, 8vw, 112px) clamp(58px, 7vw, 100px) clamp(48px, 5vw, 76px);
+  }
+
+  .machine::after {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -60px;
+    height: 100px;
+    border-radius: 999px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.46), transparent 70%);
+    filter: blur(8px);
+    pointer-events: none;
+  }
+
+  .brand-tab {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 82px;
+    height: 70px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, var(--gold-hot), #a68450);
+    color: rgba(12, 12, 13, 0.82);
+    font: 700 15px/1 'Playfair Display', serif;
+    letter-spacing: 0.04em;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.22), 10px 12px 28px rgba(0, 0, 0, 0.14);
+  }
+
+  .menu-mark {
+    position: absolute;
+    left: clamp(44px, 5vw, 72px);
+    top: 50%;
+    width: 19px;
+    height: 12px;
+    transform: translateY(-50%);
+    opacity: 0.34;
+  }
+
+  .menu-mark span {
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: var(--ink);
+  }
+
+  .intro {
+    justify-self: center;
+    width: min(100%, 330px);
+    padding-left: 24px;
+  }
+
+  .mark {
+    margin-bottom: clamp(34px, 6vw, 62px);
+    text-align: left;
+  }
+
+  .mark .est {
+    margin-bottom: 16px;
+    font: 10px/1 'Special Elite', monospace;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(244, 236, 213, 0.34);
+  }
+
+  .mark .name {
+    font: 700 clamp(34px, 4.6vw, 58px)/0.95 'Playfair Display', serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .mark .sub {
+    margin-top: 12px;
+    font: 10px/1.4 'Special Elite', monospace;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244, 236, 213, 0.58);
+  }
+
+  .slogan {
+    margin: 0 0 52px;
+    font: 10px/1.8 'Special Elite', monospace;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 236, 213, 0.58);
+  }
+
+  .slogan .dot {
+    color: var(--gold);
+    font-size: 1.2em;
+    padding: 0 8px;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 28px;
+  }
+
+  .service-num {
+    margin-bottom: 8px;
+    font: 10px/1 'Special Elite', monospace;
+    letter-spacing: 0.24em;
+    color: var(--gold);
+  }
+
+  .service-name {
+    margin: 0 0 5px;
+    font-size: clamp(17px, 1.6vw, 22px);
+    line-height: 1.05;
+    font-weight: 700;
+  }
+
+  .service-desc {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+    font-style: italic;
+    color: rgba(244, 236, 213, 0.38);
+  }
+
+  .hardware {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 470px);
+    min-height: 360px;
+  }
+
+  .f-module {
+    position: absolute;
+    top: 10px;
+    right: 78px;
+    width: clamp(170px, 18vw, 245px);
+    aspect-ratio: 0.76;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.055), transparent 30%),
+      linear-gradient(180deg, #303136, #24252a);
+    border: 1px solid rgba(0, 0, 0, 0.58);
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.05),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.54),
+      14px 18px 28px rgba(0, 0, 0, 0.28);
+  }
+
+  .vent {
+    position: absolute;
+    top: 62px;
+    width: 88px;
+  }
+
+  .vent span {
+    display: block;
+    height: 3px;
+    margin: 7px 0;
+    border-radius: 99px;
+    background: rgba(2, 2, 3, 0.72);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .f-chip {
+    position: absolute;
+    inset: 46px 42px 32px;
+    opacity: 0.34;
+  }
+
+  .f-chip svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+  }
+
+  .f-chip .f-body { fill: rgba(8, 11, 9, 0.74); }
+  .f-chip .f-board { fill: rgba(18, 71, 43, 0.42); }
+  .f-chip .trace {
+    fill: none;
+    stroke: rgba(106, 205, 124, 0.46);
+    stroke-width: 0.18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .f-chip .node { fill: rgba(201, 168, 114, 0.45); }
+
+  .side-pill {
+    position: absolute;
+    top: 120px;
+    right: 24px;
+    width: 22px;
+    height: 72px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #151518, #55585b 35%, #d6d2c3 52%, #242528 72%, #09090a);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 9px 18px rgba(0, 0, 0, 0.42);
+  }
+
+  .side-pill::before {
+    content: 'PCB';
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    transform: translateX(-50%);
+    font: 5px/1 'Special Elite', monospace;
+    letter-spacing: 0.14em;
+    color: rgba(244, 236, 213, 0.18);
+  }
+
+  .controls {
+    position: absolute;
+    right: 72px;
+    bottom: 34px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .control-dots {
+    display: flex;
+    gap: 13px;
+    padding-bottom: 12px;
+  }
+
+  .dot-control {
+    position: relative;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #686b6e, #27282c);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.18), inset -1px -1px 1px rgba(0, 0, 0, 0.6), 0 9px 14px rgba(0, 0, 0, 0.32);
+  }
+
+  .dot-control::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 50%;
+    bottom: 31px;
+    transform: translateX(-50%);
+    font: 4px/1 'Special Elite', monospace;
+    letter-spacing: 0.12em;
+    color: rgba(244, 236, 213, 0.18);
+    white-space: nowrap;
+  }
+
+  .knob {
+    position: relative;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #676a6d, #3a3c40);
+    box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.1), inset -3px -4px 5px rgba(0, 0, 0, 0.42), 0 18px 26px rgba(0, 0, 0, 0.36);
+  }
+
+  .knob::before {
+    content: 'signal';
+    position: absolute;
+    left: 50%;
+    bottom: 74px;
+    transform: translateX(-50%);
+    font: 5px/1 'Special Elite', monospace;
+    letter-spacing: 0.12em;
+    color: rgba(244, 236, 213, 0.18);
+  }
+
+  footer {
+    margin-top: 24px;
+    text-align: center;
+    font: 10px/1 'Special Elite', monospace;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(244, 236, 213, 0.22);
+  }
+
+  @media (max-width: 900px) {
+    body {
+      place-items: stretch;
+      padding: 18px;
+    }
+
+    .machine-wrap {
+      width: 100%;
+    }
+
+    .kicker {
+      display: none;
+    }
+
+    .machine {
+      min-height: calc(100svh - 70px);
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 68px 22px 28px;
+    }
+
+    .brand-tab {
+      width: 58px;
+      height: 46px;
+      font-size: 11px;
+    }
+
+    .menu-mark {
+      display: none;
+    }
+
+    .intro {
+      width: min(100%, 390px);
+      padding-left: 0;
+      justify-self: center;
+      text-align: center;
+    }
+
+    .mark {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .mark .est {
+      margin-bottom: 13px;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+    }
+
+    .mark .name {
+      font-size: clamp(29px, 8vw, 40px);
+      letter-spacing: 0.16em;
+      padding-left: 0.16em;
+    }
+
+    .mark .sub {
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      padding-left: 0.26em;
+    }
+
+    .slogan {
+      margin-bottom: 28px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+    }
+
+    .slogan .dot {
+      display: block;
+      padding: 2px 0;
+    }
+
+    .hardware {
+      order: 2;
+      width: min(100%, 360px);
+      min-height: 265px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      order: 1;
+    }
+
+    .f-module {
+      top: 0;
+      right: 50%;
+      transform: translateX(50%);
+      width: min(58vw, 190px);
+    }
+
+    .vent {
+      top: 42px;
+      width: 64px;
+    }
+
+    .vent span {
+      height: 2px;
+      margin: 5px 0;
+    }
+
+    .f-chip {
+      inset: 36px 32px 26px;
+    }
+
+    .side-pill {
+      top: 62px;
+      right: 24px;
+      width: 18px;
+      height: 58px;
+    }
+
+    .controls {
+      left: 50%;
+      right: auto;
+      bottom: 0;
+      transform: translateX(-50%);
+      gap: 12px;
+    }
+
+    .control-dots {
+      gap: 9px;
+      padding-bottom: 8px;
+    }
+
+    .dot-control {
+      width: 16px;
+      height: 16px;
+    }
+
+    .dot-control::before,
+    .knob::before,
+    .side-pill::before {
+      display: none;
+    }
+
+    .knob {
+      width: 42px;
+      height: 42px;
+    }
+
+    .services {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 14px;
+      margin-top: 4px;
+    }
+
+    .service-name {
+      font-size: clamp(16px, 5vw, 20px);
+    }
+
+    .service-desc {
+      font-size: 11px;
+    }
+
+    footer {
+      margin-top: 16px;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      line-height: 1.5;
+    }
+  }
+
+  @media (max-width: 430px) {
+    body {
+      padding: 10px;
+    }
+
+    .machine {
+      border-radius: 7px;
+      padding: 58px 16px 24px;
+    }
+
+    .mark .name {
+      font-size: clamp(26px, 7.7vw, 34px);
+    }
+
+    .services {
+      gap: 18px 10px;
+    }
+
+    .service-num {
+      font-size: 9px;
+    }
+
+    .service-name {
+      font-size: clamp(15px, 4.8vw, 18px);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="machine-wrap">
+    <p class="kicker">Fleming Creative Systems</p>
+    <section class="machine" aria-label="Fleming Creative Systems panel concept">
+      <div class="brand-tab">FCS</div>
+      <div class="menu-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+
+      <div class="intro">
+        <div class="mark">
+          <div class="est">Est. MCMXXXVIII</div>
+          <div class="name">Fleming</div>
+          <div class="sub">Creative Systems</div>
+        </div>
+
+        <p class="slogan">Traditional Standards <span class="dot">·</span> Modern Solutions</p>
+
+        <div class="services" aria-label="Services">
+          <div class="service">
+            <div class="service-num">01</div>
+            <h2 class="service-name">Marketing Sites</h2>
+            <p class="service-desc">Multi-page. Built to convert.</p>
+          </div>
+          <div class="service">
+            <div class="service-num">02</div>
+            <h2 class="service-name">Landing Pages</h2>
+            <p class="service-desc">Focused. Tuned. Conversion-ready.</p>
+          </div>
+          <div class="service">
+            <div class="service-num">03</div>
+            <h2 class="service-name">E-Commerce</h2>
+            <p class="service-desc">Stores built around the product.</p>
+          </div>
+          <div class="service">
+            <div class="service-num">04</div>
+            <h2 class="service-name">Custom Builds</h2>
+            <p class="service-desc">Tools, portals, dashboards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hardware" aria-hidden="true">
+        <div class="f-module">
+          <div class="vent"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="f-chip">
+            <svg viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg">
+              <path class="f-body" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+              <path class="f-board" d="M.72 4.13 4.21.84h13.64l-2.24 3.18H4.42v5.41h7.38l-2.24 3.18H4.42v7.22L.72 23.58V4.13Z"/>
+              <path class="trace" d="M5.35,3.64h2.85l.55-.54h1.9M12.7,1.3v1.08h1.65M1.25,5.22v3.25l.79.79v3.44M5.55,9.84h1.73l.5.5h2.16M1.42,17.07h1.08v2.1l.62.63"/>
+              <circle class="node" cx="12.7" cy="1.3" r=".18"/>
+              <circle class="node" cx="7.78" cy="10.34" r=".14"/>
+              <circle class="node" cx="3.12" cy="19.8" r=".14"/>
+            </svg>
+          </div>
+        </div>
+        <div class="side-pill"></div>
+        <div class="controls">
+          <div class="control-dots">
+            <div class="dot-control" data-label="sites"></div>
+            <div class="dot-control" data-label="pages"></div>
+            <div class="dot-control" data-label="store"></div>
+            <div class="dot-control" data-label="build"></div>
+          </div>
+          <div class="knob"></div>
+        </div>
+      </div>
+    </section>
+    <footer id="dateStamp"></footer>
+  </div>
+
+<script>
+  (function() {
+    const el = document.getElementById('dateStamp');
+    if (!el) return;
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function update() {
+      const now = new Date();
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      el.textContent = `${days[now.getDay()]} · ${months[now.getMonth()]} ${pad(now.getDate())} · ${now.getFullYear()} · ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    }
+    update();
+    setInterval(update, 60000);
+  })();
+</script>
+</body>
+</html>

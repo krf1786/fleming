@@ -293,15 +293,14 @@
     min-width: 300px;
     height: auto;
     overflow: visible;
-    opacity: 0.72;
+    opacity: 0.86;
     filter: drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.4));
-    transition: opacity 0.34s ease, filter 0.34s ease, transform 0.34s ease;
+    transition: filter 0.34s ease, transform 0.34s ease;
   }
 
   .hero-f path {
     fill: #191c1f;
     stroke: rgba(208, 168, 95, 0.018);
-    transition: fill 0.34s ease, stroke 0.34s ease;
   }
 
   .hero-copy {
@@ -585,17 +584,10 @@
 
     .mark-wrap:hover .hero-f,
     .hero-f:hover {
-      opacity: 0.94;
       transform: translateY(-2px);
       filter:
         drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.38))
         drop-shadow(0 0 8px rgba(208, 168, 95, 0.16));
-    }
-
-    .mark-wrap:hover .hero-f path,
-    .hero-f:hover path {
-      fill: #24272a;
-      stroke: rgba(208, 168, 95, 0.04);
     }
 
     .btn:hover {

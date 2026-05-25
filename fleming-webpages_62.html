@@ -21,6 +21,9 @@
     --faint: rgba(235, 231, 220, 0.34);
     --gold: #d0a85f;
     --gold-2: #8f6a32;
+    --gold-accent-line: linear-gradient(90deg, transparent 0%, rgba(208, 168, 95, 0.58) 18%, var(--gold) 50%, rgba(208, 168, 95, 0.58) 82%, transparent 100%);
+    --gold-accent-line-vertical: linear-gradient(180deg, transparent 0%, rgba(208, 168, 95, 0.58) 18%, var(--gold) 50%, rgba(208, 168, 95, 0.58) 82%, transparent 100%);
+    --gold-accent-glow: 0 0 12px rgba(208, 168, 95, 0.18);
     --shadow: rgba(0, 0, 0, 0.66);
     --rail-w: 86px;
   }
@@ -96,7 +99,8 @@
   .menu-button span {
     display: block;
     height: 1px;
-    background: linear-gradient(90deg, var(--gold), #f0d58c);
+    background: var(--gold-accent-line);
+    box-shadow: var(--gold-accent-glow);
     transform-origin: left center;
     transition: transform 0.28s ease, opacity 0.28s ease, box-shadow 0.28s ease;
   }
@@ -119,7 +123,8 @@
   .rail-line {
     width: 1px;
     height: 168px;
-    background: linear-gradient(180deg, transparent, var(--gold), transparent);
+    background: var(--gold-accent-line-vertical);
+    box-shadow: var(--gold-accent-glow);
     margin: 0 auto 38px;
   }
 
@@ -189,8 +194,8 @@
     width: calc(100% - 0.32em);
     height: 2px;
     margin: 10px 0 8px 0.32em;
-    background: linear-gradient(90deg, transparent 0%, rgba(208, 168, 95, 0.58) 18%, var(--gold) 50%, rgba(208, 168, 95, 0.58) 82%, transparent 100%);
-    box-shadow: 0 0 12px rgba(208, 168, 95, 0.18);
+    background: var(--gold-accent-line);
+    box-shadow: var(--gold-accent-glow);
     transform-origin: center;
     transition: transform 0.32s ease, box-shadow 0.32s ease, opacity 0.32s ease;
   }
@@ -239,8 +244,8 @@
     right: 0;
     bottom: -18px;
     height: 2px;
-    background: linear-gradient(90deg, var(--gold), #e0c77e);
-    box-shadow: 0 0 18px rgba(208, 168, 95, 0.22);
+    background: var(--gold-accent-line);
+    box-shadow: var(--gold-accent-glow);
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 0.28s ease, opacity 0.28s ease, box-shadow 0.28s ease;
@@ -288,10 +293,17 @@
     min-width: 300px;
     height: auto;
     overflow: visible;
-    opacity: 0.46;
+    opacity: 0.72;
     filter:
-      drop-shadow(-6px -8px 12px rgba(0, 0, 0, 0.36))
-      drop-shadow(4px 5px 5px rgba(208, 168, 95, 0.018));
+      drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.4))
+      drop-shadow(0 0 0 rgba(208, 168, 95, 0));
+    transition: opacity 0.34s ease, filter 0.34s ease, transform 0.34s ease;
+  }
+
+  .hero-f path {
+    fill: #191c1f;
+    stroke: rgba(208, 168, 95, 0.035);
+    transition: fill 0.34s ease, stroke 0.34s ease;
   }
 
   .hero-copy {
@@ -341,7 +353,8 @@
     width: 80px;
     height: 2px;
     margin: 34px 0 28px;
-    background: linear-gradient(90deg, var(--gold), #e7cb78);
+    background: var(--gold-accent-line);
+    box-shadow: var(--gold-accent-glow);
   }
 
   .lead {
@@ -428,7 +441,8 @@
     right: 24px;
     top: -1px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    background: var(--gold-accent-line);
+    box-shadow: var(--gold-accent-glow);
     opacity: 0;
     transform: scaleX(0.45);
     transition: opacity 0.28s ease, transform 0.28s ease;
@@ -568,7 +582,23 @@
     .nav a:hover::after {
       transform: scaleX(1);
       opacity: 1;
-      box-shadow: 0 0 22px rgba(208, 168, 95, 0.34);
+      box-shadow: 0 0 18px rgba(208, 168, 95, 0.34);
+    }
+
+    .mark-wrap:hover .hero-f,
+    .hero-f:hover {
+      opacity: 0.94;
+      transform: translateY(-2px);
+      filter:
+        drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.38))
+        drop-shadow(0 0 30px rgba(208, 168, 95, 0.2))
+        drop-shadow(0 0 70px rgba(208, 168, 95, 0.1));
+    }
+
+    .mark-wrap:hover .hero-f path,
+    .hero-f:hover path {
+      fill: #24272a;
+      stroke: rgba(208, 168, 95, 0.16);
     }
 
     .btn:hover {
@@ -846,10 +876,10 @@
     .hero-f {
       width: min(52vw, 210px);
       min-width: 0;
-      opacity: 0.42;
+      opacity: 0.68;
       filter:
         drop-shadow(-5px -7px 10px rgba(0, 0, 0, 0.36))
-        drop-shadow(3px 4px 4px rgba(208, 168, 95, 0.018));
+        drop-shadow(0 0 0 rgba(208, 168, 95, 0));
     }
 
     .hero-copy {
@@ -979,19 +1009,12 @@
         <div class="mark-wrap">
           <svg class="hero-f" viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
-              <linearGradient id="metalFace" x1="2.2" y1="1" x2="16.5" y2="22.8" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#4b4b45"/>
-                <stop offset="0.2" stop-color="#393a36"/>
-                <stop offset="0.52" stop-color="#191b1d"/>
-                <stop offset="0.78" stop-color="#0d0f11"/>
-                <stop offset="1" stop-color="#050607"/>
-              </linearGradient>
               <filter id="pressedEdge" x="-24%" y="-24%" width="150%" height="160%">
                 <feDropShadow dx="-0.13" dy="-0.15" stdDeviation="0.09" flood-color="#000000" flood-opacity="0.46"/>
                 <feDropShadow dx="0.08" dy="0.1" stdDeviation="0.035" flood-color="#d0a85f" flood-opacity="0.045"/>
               </filter>
             </defs>
-            <path filter="url(#pressedEdge)" fill="url(#metalFace)" stroke="rgba(208,168,95,0.055)" stroke-width="0.045" vector-effect="non-scaling-stroke" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+            <path filter="url(#pressedEdge)" fill="#191c1f" stroke="rgba(208,168,95,0.035)" stroke-width="0.045" vector-effect="non-scaling-stroke" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
           </svg>
         </div>
 

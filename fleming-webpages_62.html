@@ -31,9 +31,10 @@
 
   html,
   body {
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
     margin: 0;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   body {
@@ -56,15 +57,16 @@
   }
 
   .site {
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
     z-index: 2;
     display: grid;
     grid-template-columns: var(--rail-w) minmax(0, 1fr);
+    overflow: hidden;
   }
 
   .side-rail {
-    min-height: 100vh;
+    height: 100vh;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 20%),
       linear-gradient(180deg, #1b1d22, #0e1014 58%, #15171b);
@@ -125,7 +127,7 @@
   }
 
   .hero {
-    min-height: 100vh;
+    height: 100vh;
     position: relative;
     overflow: hidden;
     padding: clamp(34px, 4vw, 56px) clamp(40px, 5.5vw, 92px) 38px;
@@ -135,23 +137,6 @@
       linear-gradient(90deg, rgba(255, 255, 255, 0.035), transparent 16%),
       radial-gradient(ellipse at 35% 44%, rgba(255, 255, 255, 0.07), transparent 24%),
       radial-gradient(ellipse at 52% 72%, rgba(208, 168, 95, 0.055), transparent 28%);
-  }
-
-  .hero::before {
-    content: "SYSTEMS";
-    position: absolute;
-    top: 8%;
-    left: 4%;
-    z-index: 0;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(235, 231, 220, 0.032);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.018);
-    font-size: clamp(120px, 22vw, 330px);
-    font-weight: 900;
-    letter-spacing: -0.08em;
-    line-height: 0.8;
-    white-space: nowrap;
-    pointer-events: none;
   }
 
   .topbar {
@@ -497,7 +482,8 @@
     .nav {
       justify-content: flex-start;
       gap: 28px;
-      overflow-x: auto;
+      flex-wrap: wrap;
+      overflow: visible;
       padding-bottom: 16px;
     }
 
@@ -525,12 +511,13 @@
   @media (max-width: 760px) {
     html,
     body {
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     .site {
       display: block;
-      min-height: 100svh;
+      height: 100svh;
+      overflow: hidden;
     }
 
     .side-rail {
@@ -551,19 +538,11 @@
     }
 
     .hero {
-      min-height: calc(100svh - 58px);
+      height: calc(100svh - 58px);
       width: 100vw;
       max-width: 100vw;
-      padding: 26px 20px 28px;
-      grid-template-rows: auto auto auto;
-    }
-
-    .hero::before {
-      top: 10%;
-      left: -18%;
-      font-size: clamp(90px, 36vw, 160px);
-      letter-spacing: -0.1em;
-      opacity: 0.9;
+      padding: 22px 20px 20px;
+      grid-template-rows: auto minmax(0, 1fr);
     }
 
     .topbar {
@@ -619,18 +598,19 @@
 
     .hero-main {
       grid-template-columns: 1fr;
-      gap: 14px;
-      padding: 18px 0 26px;
+      gap: 10px;
+      padding: 12px 0 0;
       text-align: center;
+      align-content: center;
     }
 
     .mark-wrap {
-      min-height: 230px;
+      min-height: clamp(145px, 27svh, 205px);
       order: 1;
     }
 
     .hero-f {
-      width: min(58vw, 230px);
+      width: min(52vw, 210px);
       min-width: 0;
       opacity: 0.58;
       filter:
@@ -665,16 +645,16 @@
     }
 
     .gold-rule {
-      margin: 24px auto 18px;
-      width: 64px;
+      margin: 18px auto 14px;
+      width: 58px;
     }
 
     .lead {
       width: 100%;
-      max-width: calc(100vw - 56px);
-      margin: 0 auto 26px;
-      font-size: 15px;
-      line-height: 1.55;
+      max-width: min(280px, calc(100vw - 84px));
+      margin: 0 auto 16px;
+      font-size: 12.5px;
+      line-height: 1.42;
       padding: 0;
       overflow-wrap: break-word;
     }
@@ -687,27 +667,13 @@
     .btn {
       min-width: min(100%, 310px);
       width: 100%;
-      min-height: 54px;
+      min-height: 50px;
       font-size: 11px;
       letter-spacing: 0.2em;
     }
 
     .service-rail {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .service-item {
-      min-height: 56px;
-      padding: 0 12px;
-      justify-content: center;
-      gap: 10px;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      border-bottom: 1px solid var(--line-soft);
-    }
-
-    .service-item:nth-child(2n) {
-      border-right: 0;
+      display: none;
     }
 
     .slider-row {

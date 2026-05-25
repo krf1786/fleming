@@ -286,6 +286,20 @@
     transform: translate(-8%, 2%);
   }
 
+  .mark-wrap::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: min(45vw, 520px);
+    aspect-ratio: 0.78;
+    border-radius: 50%;
+    background: rgba(208, 168, 95, 0.11);
+    filter: blur(42px);
+    opacity: 0;
+    transform: translate(-5%, 1%) scale(0.96);
+    transition: opacity 0.34s ease, transform 0.34s ease;
+  }
+
   .hero-f {
     position: relative;
     z-index: 2;
@@ -294,15 +308,13 @@
     height: auto;
     overflow: visible;
     opacity: 0.72;
-    filter:
-      drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.4))
-      drop-shadow(0 0 0 rgba(208, 168, 95, 0));
+    filter: drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.4));
     transition: opacity 0.34s ease, filter 0.34s ease, transform 0.34s ease;
   }
 
   .hero-f path {
     fill: #191c1f;
-    stroke: rgba(208, 168, 95, 0.035);
+    stroke: rgba(208, 168, 95, 0.018);
     transition: fill 0.34s ease, stroke 0.34s ease;
   }
 
@@ -585,20 +597,23 @@
       box-shadow: 0 0 18px rgba(208, 168, 95, 0.34);
     }
 
+    .mark-wrap:hover::after,
+    .mark-wrap:has(.hero-f:hover)::after {
+      opacity: 1;
+      transform: translate(-5%, 1%) scale(1);
+    }
+
     .mark-wrap:hover .hero-f,
     .hero-f:hover {
       opacity: 0.94;
       transform: translateY(-2px);
-      filter:
-        drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.38))
-        drop-shadow(0 0 30px rgba(208, 168, 95, 0.2))
-        drop-shadow(0 0 70px rgba(208, 168, 95, 0.1));
+      filter: drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.38));
     }
 
     .mark-wrap:hover .hero-f path,
     .hero-f:hover path {
       fill: #24272a;
-      stroke: rgba(208, 168, 95, 0.16);
+      stroke: rgba(208, 168, 95, 0.04);
     }
 
     .btn:hover {
@@ -877,9 +892,7 @@
       width: min(52vw, 210px);
       min-width: 0;
       opacity: 0.68;
-      filter:
-        drop-shadow(-5px -7px 10px rgba(0, 0, 0, 0.36))
-        drop-shadow(0 0 0 rgba(208, 168, 95, 0));
+      filter: drop-shadow(-5px -7px 10px rgba(0, 0, 0, 0.36));
     }
 
     .hero-copy {

@@ -89,12 +89,15 @@
     border: 0;
     padding: 0;
     background: transparent;
+    cursor: pointer;
   }
 
   .menu-button span {
     display: block;
     height: 1px;
     background: linear-gradient(90deg, var(--gold), #f0d58c);
+    transform-origin: left center;
+    transition: transform 0.28s ease, opacity 0.28s ease, box-shadow 0.28s ease;
   }
 
   .socials {
@@ -106,6 +109,10 @@
     font-weight: 700;
     line-height: 1;
     text-align: center;
+  }
+
+  .socials span {
+    transition: color 0.28s ease, opacity 0.28s ease, transform 0.28s ease;
   }
 
   .rail-line {
@@ -162,6 +169,7 @@
     align-items: center;
     width: max-content;
     line-height: 1;
+    transition: transform 0.32s ease, filter 0.32s ease;
   }
 
   .brand-main {
@@ -173,6 +181,7 @@
     padding-left: 0.32em;
     line-height: 0.9;
     text-transform: uppercase;
+    transition: color 0.32s ease, text-shadow 0.32s ease;
   }
 
   .brand-accent {
@@ -181,6 +190,8 @@
     margin: 10px 0 8px 0.32em;
     background: linear-gradient(90deg, transparent 0%, rgba(208, 168, 95, 0.58) 18%, var(--gold) 50%, rgba(208, 168, 95, 0.58) 82%, transparent 100%);
     box-shadow: 0 0 12px rgba(208, 168, 95, 0.18);
+    transform-origin: center;
+    transition: transform 0.32s ease, box-shadow 0.32s ease, opacity 0.32s ease;
   }
 
   .brand-sub {
@@ -192,6 +203,7 @@
     letter-spacing: 0.38em;
     padding-left: 0.38em;
     text-transform: uppercase;
+    transition: color 0.32s ease, opacity 0.32s ease;
   }
 
   .nav {
@@ -212,13 +224,14 @@
     font-weight: 800;
     letter-spacing: 0.22em;
     text-transform: uppercase;
+    transition: color 0.28s ease, transform 0.28s ease, text-shadow 0.28s ease;
   }
 
   .nav a.active {
     color: var(--text);
   }
 
-  .nav a.active::after {
+  .nav a::after {
     content: "";
     position: absolute;
     left: 0;
@@ -227,6 +240,15 @@
     height: 2px;
     background: linear-gradient(90deg, var(--gold), #e0c77e);
     box-shadow: 0 0 18px rgba(208, 168, 95, 0.22);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.28s ease, opacity 0.28s ease, box-shadow 0.28s ease;
+    opacity: 0.72;
+  }
+
+  .nav a.active::after {
+    transform: scaleX(1);
+    opacity: 1;
   }
 
   .hero-main {
@@ -336,6 +358,8 @@
   }
 
   .btn {
+    position: relative;
+    overflow: hidden;
     min-width: 218px;
     min-height: 62px;
     display: inline-grid;
@@ -348,6 +372,17 @@
     letter-spacing: 0.23em;
     text-transform: uppercase;
     background: rgba(9, 10, 12, 0.34);
+    transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(208, 168, 95, 0.16), transparent);
+    transform: translateX(-120%);
+    transition: transform 0.48s ease;
+    pointer-events: none;
   }
 
   .btn.primary {
@@ -370,6 +405,7 @@
   }
 
   .service-item {
+    position: relative;
     min-height: 76px;
     display: flex;
     align-items: center;
@@ -381,6 +417,20 @@
     font-weight: 800;
     letter-spacing: 0.24em;
     text-transform: uppercase;
+    transition: color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease;
+  }
+
+  .service-item::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transform: scaleX(0.45);
+    transition: opacity 0.28s ease, transform 0.28s ease;
   }
 
   .service-item:last-child {
@@ -392,6 +442,7 @@
     font-size: 22px;
     font-weight: 400;
     line-height: 1;
+    transition: transform 0.28s ease, color 0.28s ease;
   }
 
   .slider-row {
@@ -405,6 +456,8 @@
   }
 
   .slider-button {
+    position: relative;
+    overflow: hidden;
     min-height: 52px;
     border: 1px solid var(--line);
     color: rgba(235, 231, 220, 0.58);
@@ -417,6 +470,17 @@
     font-weight: 800;
     letter-spacing: 0.26em;
     text-transform: uppercase;
+    transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .slider-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(208, 168, 95, 0.08), transparent);
+    transform: translateX(-115%);
+    transition: transform 0.46s ease;
+    pointer-events: none;
   }
 
   .slider-button.next {
@@ -429,6 +493,7 @@
     border-top: 2px solid currentColor;
     border-left: 2px solid currentColor;
     transform: rotate(-45deg);
+    transition: transform 0.28s ease;
   }
 
   .next .chev {
@@ -453,14 +518,107 @@
   }
 
   @media (hover: hover) {
-    .nav a:hover,
-    .slider-button:hover {
+    .menu-button:hover span:first-child {
+      transform: scaleX(1.25);
+      box-shadow: 0 0 10px rgba(208, 168, 95, 0.42);
+    }
+
+    .menu-button:hover span:nth-child(2) {
+      transform: scaleX(0.72);
+    }
+
+    .menu-button:hover span:last-child {
+      transform: scaleX(1.08);
+      box-shadow: 0 0 10px rgba(208, 168, 95, 0.32);
+    }
+
+    .socials span:hover {
+      color: var(--gold);
+      opacity: 1;
+      transform: translateX(2px);
+    }
+
+    .brand:hover {
+      transform: translateY(-2px);
+      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.28));
+    }
+
+    .brand:hover .brand-main {
+      color: #fff9ea;
+      text-shadow: 0 0 18px rgba(208, 168, 95, 0.14);
+    }
+
+    .brand:hover .brand-accent {
+      transform: scaleX(1.08);
+      box-shadow: 0 0 18px rgba(208, 168, 95, 0.34);
+      opacity: 1;
+    }
+
+    .brand:hover .brand-sub {
+      color: rgba(235, 231, 220, 0.9);
+    }
+
+    .nav a:hover {
       color: var(--text);
+      transform: translateY(-2px);
+      text-shadow: 0 0 16px rgba(208, 168, 95, 0.16);
+    }
+
+    .nav a:hover::after {
+      transform: scaleX(1);
+      opacity: 1;
+      box-shadow: 0 0 22px rgba(208, 168, 95, 0.34);
     }
 
     .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.35);
+      color: #f6d588;
+      border-color: rgba(231, 203, 120, 0.95);
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.35), 0 0 22px rgba(208, 168, 95, 0.12);
+    }
+
+    .btn:hover::before {
+      transform: translateX(120%);
+    }
+
+    .btn.primary:hover {
+      color: #050607;
+      box-shadow: 0 20px 34px rgba(0, 0, 0, 0.38), 0 0 28px rgba(208, 168, 95, 0.24);
+    }
+
+    .service-item:hover {
+      color: var(--text);
+      background: linear-gradient(180deg, rgba(208, 168, 95, 0.045), transparent);
+      box-shadow: inset 0 1px 0 rgba(208, 168, 95, 0.08);
+    }
+
+    .service-item:hover::before {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .service-item:hover .plus {
+      transform: rotate(90deg) scale(1.05);
+      color: #e7cb78;
+    }
+
+    .slider-button:hover {
+      color: var(--text);
+      border-color: rgba(208, 168, 95, 0.42);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 24px rgba(0, 0, 0, 0.26);
+    }
+
+    .slider-button:hover::before {
+      transform: translateX(115%);
+    }
+
+    .slider-button:hover .chev {
+      transform: translateX(-4px) rotate(-45deg);
+    }
+
+    .slider-button.next:hover .chev {
+      transform: translateX(4px) rotate(135deg);
     }
   }
 

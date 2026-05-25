@@ -72,8 +72,9 @@
       linear-gradient(180deg, #1b1d22, #0e1014 58%, #15171b);
     border-right: 1px solid rgba(255, 255, 255, 0.055);
     box-shadow:
-      26px 0 54px rgba(0, 0, 0, 0.46),
-      8px 0 18px rgba(0, 0, 0, 0.32);
+      46px 0 92px rgba(0, 0, 0, 0.62),
+      18px 0 34px rgba(0, 0, 0, 0.46),
+      4px 0 10px rgba(0, 0, 0, 0.38);
     display: grid;
     grid-template-rows: auto 1fr auto;
     justify-items: center;
@@ -119,7 +120,7 @@
     width: 1px;
     height: 168px;
     background: linear-gradient(180deg, transparent, var(--gold), transparent);
-    margin-bottom: 38px;
+    margin: 0 auto 38px;
   }
 
   .rail-caption {
@@ -247,8 +248,8 @@
   }
 
   .nav a.active::after {
-    transform: scaleX(1);
-    opacity: 1;
+    transform: scaleX(0);
+    opacity: 0;
   }
 
   .hero-main {
@@ -287,7 +288,7 @@
     min-width: 300px;
     height: auto;
     overflow: visible;
-    opacity: 0.62;
+    opacity: 0.46;
     filter:
       drop-shadow(-6px -8px 12px rgba(0, 0, 0, 0.36))
       drop-shadow(4px 5px 5px rgba(208, 168, 95, 0.018));
@@ -845,7 +846,7 @@
     .hero-f {
       width: min(52vw, 210px);
       min-width: 0;
-      opacity: 0.58;
+      opacity: 0.42;
       filter:
         drop-shadow(-5px -7px 10px rgba(0, 0, 0, 0.36))
         drop-shadow(3px 4px 4px rgba(208, 168, 95, 0.018));
@@ -966,7 +967,7 @@
         </a>
 
         <nav class="nav" aria-label="Primary navigation">
-          <a class="active" href="#services">Services</a>
+          <a href="#services">Services</a>
           <a href="#work">Work</a>
           <a href="#process">Process</a>
           <a href="#about">About</a>

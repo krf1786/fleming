@@ -6,7 +6,7 @@
 <title>Fleming Creative Systems</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #07080a;
@@ -69,7 +69,9 @@
       linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 20%),
       linear-gradient(180deg, #1b1d22, #0e1014 58%, #15171b);
     border-right: 1px solid rgba(255, 255, 255, 0.055);
-    box-shadow: 18px 0 42px rgba(0, 0, 0, 0.28);
+    box-shadow:
+      26px 0 54px rgba(0, 0, 0, 0.46),
+      8px 0 18px rgba(0, 0, 0, 0.32);
     display: grid;
     grid-template-rows: auto 1fr auto;
     justify-items: center;
@@ -250,8 +252,8 @@
     width: min(58vw, 610px);
     aspect-ratio: 1.25;
     border-radius: 50%;
-    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.1), transparent 64%);
-    filter: blur(2px);
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.32), transparent 66%);
+    filter: blur(5px);
     transform: translate(-8%, 2%);
   }
 
@@ -263,8 +265,8 @@
     height: auto;
     overflow: visible;
     filter:
-      drop-shadow(20px 28px 18px rgba(0, 0, 0, 0.62))
-      drop-shadow(2px 1px 0 rgba(255, 255, 255, 0.14));
+      drop-shadow(-8px -10px 14px rgba(0, 0, 0, 0.42))
+      drop-shadow(5px 7px 7px rgba(235, 231, 220, 0.035));
   }
 
   .hero-copy {
@@ -277,11 +279,12 @@
 
   h1 {
     margin: 0;
+    font-family: "Barlow Condensed", Inter, Arial, Helvetica, sans-serif;
     font-size: clamp(50px, 5.2vw, 86px);
-    line-height: 1.04;
-    letter-spacing: -0.04em;
+    line-height: 0.98;
+    letter-spacing: 0.015em;
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 600;
   }
 
   h1 span {
@@ -289,11 +292,10 @@
   }
 
   .silver {
-    color: #d8d8d4;
+    color: #d6d4ce;
     text-shadow:
-      0 1px 0 #fff,
-      0 4px 12px rgba(0, 0, 0, 0.58),
-      0 -1px 0 rgba(0, 0, 0, 0.9);
+      0 10px 20px rgba(0, 0, 0, 0.38),
+      0 -1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .gold-word {
@@ -303,7 +305,7 @@
     background: linear-gradient(180deg, #efd389 0%, #c99d4f 46%, #7e5724 100%);
     -webkit-background-clip: text;
     background-clip: text;
-    text-shadow: 0 14px 24px rgba(0, 0, 0, 0.38);
+    text-shadow: 0 12px 20px rgba(0, 0, 0, 0.32);
   }
 
   .gold-word .mobile-line {
@@ -644,11 +646,11 @@
 
     .lead {
       width: 100%;
-      max-width: calc(100vw - 40px);
+      max-width: calc(100vw - 56px);
       margin: 0 auto 26px;
       font-size: 15px;
       line-height: 1.55;
-      padding: 0 4px;
+      padding: 0;
       overflow-wrap: break-word;
     }
 
@@ -752,19 +754,18 @@
           <svg class="hero-f" viewBox="0 0 19.24 25.21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <linearGradient id="metalFace" x1="2.2" y1="1" x2="16.5" y2="22.8" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#f2eee1"/>
-                <stop offset="0.12" stop-color="#bdb7aa"/>
-                <stop offset="0.35" stop-color="#615f58"/>
-                <stop offset="0.55" stop-color="#2a2b2c"/>
-                <stop offset="0.8" stop-color="#68645b"/>
-                <stop offset="1" stop-color="#171819"/>
+                <stop offset="0" stop-color="#86827a"/>
+                <stop offset="0.18" stop-color="#626057"/>
+                <stop offset="0.48" stop-color="#242629"/>
+                <stop offset="0.72" stop-color="#15171a"/>
+                <stop offset="1" stop-color="#07080a"/>
               </linearGradient>
-              <filter id="beveledEdge" x="-30%" y="-30%" width="160%" height="170%">
-                <feDropShadow dx="0.28" dy="0.36" stdDeviation="0.12" flood-color="#000000" flood-opacity="0.75"/>
-                <feDropShadow dx="-0.08" dy="-0.08" stdDeviation="0.03" flood-color="#ffffff" flood-opacity="0.55"/>
+              <filter id="pressedEdge" x="-24%" y="-24%" width="150%" height="160%">
+                <feDropShadow dx="-0.16" dy="-0.18" stdDeviation="0.1" flood-color="#000000" flood-opacity="0.58"/>
+                <feDropShadow dx="0.12" dy="0.14" stdDeviation="0.04" flood-color="#d0a85f" flood-opacity="0.1"/>
               </filter>
             </defs>
-            <path filter="url(#beveledEdge)" fill="url(#metalFace)" stroke="rgba(255,255,255,0.28)" stroke-width="0.065" vector-effect="non-scaling-stroke" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
+            <path filter="url(#pressedEdge)" fill="url(#metalFace)" stroke="rgba(208,168,95,0.13)" stroke-width="0.055" vector-effect="non-scaling-stroke" d="M0,3.7v21.51l5.14-5.2v-6.8h4.79l3.26-4.62H5.14v-3.97s10.84,0,10.84,0l3.26-4.62H3.92L0,3.7Z"/>
           </svg>
         </div>
 

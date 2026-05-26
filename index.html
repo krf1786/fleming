@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///Users/kylefleming/Downloads/Qwen_html_20260525_oh4uzpkk3.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FCS // Execution, Not Fluff.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="./css2" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #121214;
+            --surface: #1A1A1D;
+            --border: #2A2A2E;
+            --text: #F4F4F5;
+            --muted: #71717A;
+            --accent: #FF5500; /* Industrial Safety Orange */
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            cursor: none; /* Custom cursor */
+        }
+
+        ::selection { background: var(--accent); color: var(--bg); }
+        a { color: inherit; text-decoration: none; cursor: none; }
+
+        /* --- ATMOSPHERE & CURSOR --- */
+        .grain {
+            position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.12) 0%, transparent 60%);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            transition: opacity 0.3s;
+        }
+        
+        .cursor-dot {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* --- HEADER --- */
+        header {
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3vw;
+            border-bottom: 1px solid var(--border);
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .logo { font-weight: 700; font-size: 0.9rem; letter-spacing: -0.05em; }
+        .logo span { color: var(--accent); }
+
+        .header-right { display: flex; align-items: center; gap: 3rem; }
+        
+        .status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .status::before {
+            content: ''; width: 6px; height: 6px; background: #22C55E; border-radius: 50%;
+            box-shadow: 0 0 8px #22C55E;
+        }
+
+        .cta-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            transition: all 0.3s;
+            background: transparent;
+        }
+        .cta-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+        }
+
+        /* --- MAIN STAGE --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        /* DYNAMIC HEADLINE */
+        .headline-stage {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 3vw;
+            position: relative;
+        }
+
+        .headline-wrapper {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            height: 200px; /* Fixed height to prevent layout shift */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .headline {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .headline.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .headline .accent { color: var(--accent); }
+
+        /* --- THE ACCORDION COLUMNS --- */
+        .columns-stage {
+            height: 45%;
+            display: flex;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .col {
+            flex: 1;
+            border-right: 1px solid var(--border);
+            padding: 2rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: flex 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.4s;
+            cursor: none;
+        }
+
+        .col:last-child { border-right: none; }
+
+        .col:hover {
+            flex: 2.5;
+            background: var(--surface);
+        }
+
+        /* Background Giant Number */
+        .col-bg-num {
+            position: absolute;
+            bottom: -30px;
+            right: -10px;
+            font-size: 15rem;
+            font-weight: 800;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--border);
+            opacity: 0.3;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .col:hover .col-bg-num {
+            -webkit-text-stroke: 1px var(--accent);
+            opacity: 0.15;
+            transform: translateY(-20px);
+        }
+
+        .col-top { z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; }
+        
+        .col-index {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .col-icon {
+            width: 32px; height: 32px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            transition: all 0.4s;
+        }
+        
+        .col:hover .col-icon {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--bg);
+            transform: rotate(45deg);
+        }
+
+        .col-bottom { z-index: 2; }
+
+        .col-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            transition: color 0.3s;
+        }
+        
+        .col:hover .col-title { color: var(--accent); }
+
+        .col-desc {
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--muted);
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease 0.1s;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .col:hover .col-desc {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .col-link {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.4s ease 0.2s;
+        }
+        
+        .col:hover .col-link {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .col-link::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+        .col-link:hover::after { transform: translateX(5px); }
+
+        /* --- MOBILE FALLBACK --- */
+        @media (max-width: 900px) {
+            body { height: auto; min-height: 100dvh; overflow-y: auto; cursor: auto; }
+            .cursor-glow, .cursor-dot, .grain { display: none; }
+            .columns-stage { flex-direction: column; height: auto; }
+            .col { border-right: none; border-bottom: 1px solid var(--border); flex: auto !important; padding: 2rem; }
+            .col-desc { opacity: 1; transform: none; height: auto; margin-bottom: 1rem; }
+            .col-link { opacity: 1; transform: none; }
+            .col-bg-num { font-size: 8rem; }
+            .headline { font-size: 3rem; white-space: normal; }
+            .headline-stage { padding: 2rem; }
+            .headline-wrapper { height: auto; position: relative; }
+            .headline { position: relative; opacity: 1; transform: none; }
+            .headline:not(.default-mobile) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain"></div>
+    <div class="cursor-glow" style="left: 841px; top: 388px;"></div>
+    <div class="cursor-dot" style="left: 841px; top: 388px;"></div>
+
+    <header>
+        <div class="logo">FCS<span>_</span>SYSTEMS</div>
+        <div class="header-right">
+            <div class="status">Accepting Q3 Projects</div>
+            <a href="mailto:kyle@fcs.com" class="cta-btn">Start Project</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- DYNAMIC HEADLINE -->
+        <section class="headline-stage">
+            <div class="headline-wrapper">
+                <h1 class="headline active" data-id="default">Execution, <span class="accent">Not Fluff.</span></h1>
+                <h1 class="headline" data-id="ai">Automated <span class="accent">Workflows.</span></h1>
+                <h1 class="headline" data-id="web">Production <span class="accent">Websites.</span></h1>
+                <h1 class="headline" data-id="print">Prepress <span class="accent">Perfection.</span></h1>
+                <h1 class="headline" data-id="tech">Technical <span class="accent">Strategy.</span></h1>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE COLUMNS -->
+        <section class="columns-stage">
+            
+            <div class="col" data-target="ai">
+                <div class="col-bg-num">01</div>
+                <div class="col-top">
+                    <span class="col-index">01 / AI</span>
+                    <div class="col-icon">↗</div>
+                </div>
+                <div class="col-bottom">
+                    <h3 class="col-title">Workflow Automation</h3>
+                    <p class="col-desc">Custom AI integrations that eliminate manual bottlenecks, reduce overhead, and scale your daily operations seamlessly.</p>
+                    <a href="mailto:kyle@fcs.com" class="col-link">Explore Systems</a>
+                </div>
+            </div>
+
+            <div class="col" data-target="web">
+                <div class="col-bg-num">02</div>
+                <div class="col-top">
+                    <span class="col-index">02 / WEB</span>
+                    <div class="col-icon">↗</div>
+                </div>
+                <div class="col-bottom">
+                    <h3 class="col-title">Production Web</h3>
+                    <p class="col-desc">Sharp, fast, and functional digital storefronts designed to convert traffic and integrate with your existing tech stack.</p>
+                    <a href="mailto:kyle@fcs.com" class="col-link">Explore Builds</a>
+                </div>
+            </div>
+
+            <div class="col" data-target="print">
+                <div class="col-bg-num">03</div>
+                <div class="col-top">
+                    <span class="col-index">03 / PRINT</span>
+                    <div class="col-icon">↗</div>
+                </div>
+                <div class="col-bottom">
+                    <h3 class="col-title">Print &amp; Prepress</h3>
+                    <p class="col-desc">Flawless, print-ready production files. We handle the technical heavy lifting so your assets go to press perfectly.</p>
+                    <a href="mailto:kyle@fcs.com" class="col-link">Explore Files</a>
+                </div>
+            </div>
+
+            <div class="col" data-target="tech">
+                <div class="col-bg-num">04</div>
+                <div class="col-top">
+                    <span class="col-index">04 / TECH</span>
+                    <div class="col-icon">↗</div>
+                </div>
+                <div class="col-bottom">
+                    <h3 class="col-title">Tech Consulting</h3>
+                    <p class="col-desc">Strategic audits and tech-stack alignment. We tell you what’s broken, what’s unnecessary, and exactly how to fix it.</p>
+                    <a href="mailto:kyle@fcs.com" class="col-link">Explore Audits</a>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        // 1. Custom Cursor & Glow Tracking
+        const glow = document.querySelector('.cursor-glow');
+        const dot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+            
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+
+        // 2. Dynamic Headline Swap
+        const cols = document.querySelectorAll('.col');
+        const headlines = document.querySelectorAll('.headline');
+
+        cols.forEach(col => {
+            col.addEventListener('mouseenter', () => {
+                const targetId = col.getAttribute('data-target');
+                
+                headlines.forEach(h => {
+                    h.classList.remove('active');
+                    if (h.getAttribute('data-id') === targetId) {
+                        h.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Reset to default when mouse leaves the columns area
+        document.querySelector('.columns-stage').addEventListener('mouseleave', () => {
+            headlines.forEach(h => {
+                h.classList.remove('active');
+                if (h.getAttribute('data-id') === 'default') {
+                    h.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body></html>
